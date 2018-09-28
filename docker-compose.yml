@@ -1,0 +1,26 @@
+version: '2'
+services:
+  web:
+    build:
+      context: service/web
+    container_name: sampleweb
+    ports:
+      - "8080:80"
+    links:
+      - cache:samplecache
+      - db:sampledb
+    volumes:
+      - ./contents/web/html:/var/www/html
+  cache:
+    build: service/cache
+    container_name: samplecache
+  db:
+    build: service/db
+    container_name: sampledb
+    environment:
+      MYSQL_DATABASE: sample_db
+      MYSQL_USER: sample
+      MYSQL_PASSWORD: sample_password
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3316:3306"
